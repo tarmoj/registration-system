@@ -1,0 +1,3 @@
+# This directory contains the email log used during local testing.
+# Do not commit log files.
+*.log
