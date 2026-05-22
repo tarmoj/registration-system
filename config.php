@@ -8,8 +8,8 @@ define('DB_PASS', 'PaulHindemith');
 define('DB_CHARSET', 'utf8mb4');
 
 // Application
-define('BASE_URL', 'http://localhost/registration-system');
-define('SECRET_KEY', 'change-this-to-a-long-random-string-in-production');
+define('BASE_URL', 'http://localhost:8000/registration-system');
+define('SECRET_KEY', 'w6V7xtl4AB/q0PuAJNBH727YQggMiy45lHQAWXMlhR8=');
 
 // Email: set to true to write emails to logs/email.log instead of sending
 define('TESTING', true);

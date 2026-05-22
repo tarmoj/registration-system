@@ -42,7 +42,7 @@ Kui liitub veel huvilisi: Lihtsate lugude ansambel (õppinud mõned aastad või 
 
     // Confirmation email
     'email_confirm_subject' => 'Koosmänguklubi – registreerumine kinnitatud',
-    'email_confirm_body'    => "Aitäh registreerimast!\n\nEdasisi osalemisi saate sisse kanda sellel lehel:\n%s\n\nIgal nädalal saadetakse ka meeldetuletav e-mail.\n\nKüsimuste korral kirjutage: koosmanguklubi@gmail.com\n\nTarmo",
+    'email_confirm_body'    => "Aitäh registreerimast!\n\nEdasisi osalemisi saate sisse kanda sellel lehel:\n%s\n\nIgal nädalal saadetakse ka meeldetuletav e-mail.\n\nKlubist lahkumiseks: %s\n\nKüsimuste korral kirjutage: koosmanguklubi@gmail.com\n\nTarmo",
 
     // Attendance page
     'attendance_intro'    => 'Palun märkige <strong>+</strong> kui saate tulla, <strong>–</strong> kui mitte ning jätke tühjaks kui veel ei tea.',
@@ -56,9 +56,12 @@ Kui liitub veel huvilisi: Lihtsate lugude ansambel (õppinud mõned aastad või 
     'reminder_subject'    => 'Meeldetuletus – Koosmänguklubi',
     'reminder_body'       => "Meeldetuletus: palun kinnitage, kas osalete Koosmänguklubi ansamblis \"%s\" %s:\n\nJAH: %s\nEI:  %s\n",
 
+    // Unsubscribe link label (shown on registration page and in emails)
+    'unsubscribe_label'   => 'Klubist lahkumine',
+
     // Unsubscribe page
     'unsubscribe_confirm' => 'Kas soovite loobuda Koosmänguklubi meililistist?',
     'unsubscribe_btn'     => 'Loobu',
-    'unsubscribe_done'    => 'Kahju, et lahkute. Olete alati teretulnud uuesti liituma <a href="%s">registreerumisel</a>.',
+    'unsubscribe_done'    => 'Kahju, et lahkute. Olete alati teretulnud uuesti liituma <a href="%s">registreerumislehel</a>.',
     'unsubscribe_invalid' => 'Vigane link.',
 ];

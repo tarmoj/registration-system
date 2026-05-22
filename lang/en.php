@@ -42,7 +42,7 @@ If more participants join: Simple pieces ensemble (a few years of study or self-
 
     // Confirmation email
     'email_confirm_subject' => 'Koosmänguklubi – Registration confirmed',
-    'email_confirm_body'    => "Thank you for registering!\n\nYou can mark your attendance here:\n%s\n\nA weekly reminder email will also be sent.\n\nFor questions write to: koosmanguklubi@gmail.com\n\nTarmo",
+    'email_confirm_body'    => "Thank you for registering!\n\nYou can mark your attendance here:\n%s\n\nA weekly reminder email will also be sent.\n\nTo unsubscribe from the club: %s\n\nFor questions write to: koosmanguklubi@gmail.com\n\nTarmo",
 
     // Attendance page
     'attendance_intro'    => 'Please mark <strong>+</strong> if you can attend, <strong>–</strong> if not, and leave empty if you do not know yet.',
@@ -55,6 +55,9 @@ If more participants join: Simple pieces ensemble (a few years of study or self-
     // Reminder email
     'reminder_subject'    => 'Reminder – Koosmänguklubi',
     'reminder_body'       => "Reminder: please confirm whether you will attend the Koosmänguklubi ensemble \"%s\" on %s:\n\nYES: %s\nNO:  %s\n",
+
+    // Unsubscribe link label (shown on registration page and in emails)
+    'unsubscribe_label'   => 'Unsubscribe from club',
 
     // Unsubscribe page
     'unsubscribe_confirm' => 'Would you like to unsubscribe from the Koosmänguklubi mailing list?',

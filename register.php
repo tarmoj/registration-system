@@ -19,6 +19,12 @@ function attendanceUrl(string $email): string {
     return BASE_URL . '/attendance.php?email=' . urlencode($email) . '&token=' . $token;
 }
 
+// Build unsubscribe URL for a given email
+function unsubscribeUrl(string $email): string {
+    $token = hash_hmac('sha256', $email, SECRET_KEY);
+    return BASE_URL . '/unsubscribe.php?email=' . urlencode($email) . '&token=' . $token;
+}
+
 $errors  = [];
 $success = false;
 
@@ -79,21 +85,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         $pdo->commit();
 
-        // Build attendance URL
-        $url = attendanceUrl($email);
+        // Build attendance and unsubscribe URLs
+        $url          = attendanceUrl($email);
+        $unsubUrl     = unsubscribeUrl($email);
 
         // Send bilingual confirmation email
         $etLang = require __DIR__ . '/lang/et.php';
         $enLang = require __DIR__ . '/lang/en.php';
 
         $subject = $etLang['email_confirm_subject'];
-        $body  = "--- Eesti ---\n" . sprintf($etLang['email_confirm_body'], $url);
-        $body .= "\n\n--- English ---\n" . sprintf($enLang['email_confirm_body'], $url);
+        $body  = "--- Eesti ---\n" . sprintf($etLang['email_confirm_body'], $url, $unsubUrl);
+        $body .= "\n\n--- English ---\n" . sprintf($enLang['email_confirm_body'], $url, $unsubUrl);
 
         sendEmail($email, $subject, $body);
 
-        $success = true;
-        $successUrl = htmlspecialchars($url, ENT_QUOTES, 'UTF-8');
+        $success    = true;
+        $successUrl  = htmlspecialchars($url,     ENT_QUOTES, 'UTF-8');
+        $successUnsub = htmlspecialchars($unsubUrl, ENT_QUOTES, 'UTF-8');
     }
 }
 
@@ -130,7 +138,10 @@ $ensembleRows = db()->query('SELECT id, name, name_est FROM ensembles ORDER BY i
 <?= $t['intro'] ?>
 
 <?php if ($success): ?>
-  <div class="success"><?= sprintf($t['success_register'], '<a href="' . $successUrl . '">' . $successUrl . '</a>') ?></div>
+  <div class="success">
+    <?= sprintf($t['success_register'], '<a href="' . $successUrl . '">' . $successUrl . '</a>') ?><br>
+    <a href="<?= $successUnsub ?>"><?= $t['unsubscribe_label'] ?></a>
+  </div>
 <?php else: ?>
 
 <?php if (!empty($errors)): ?>
