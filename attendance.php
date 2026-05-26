@@ -100,15 +100,20 @@ $loginError = '';
 if (!isset($_SESSION['reg_id']) && $_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login_email'])) {
     $loginEmail = trim($_POST['login_email'] ?? '');
     if (filter_var($loginEmail, FILTER_VALIDATE_EMAIL)) {
-        $pdo  = db();
-        $stmt = $pdo->prepare('SELECT id FROM registrations WHERE email = ?');
-        $stmt->execute([$loginEmail]);
-        $row = $stmt->fetch();
-        if ($row) {
+        if (strcasecmp($loginEmail, ADMIN_EMAIL) === 0) {
             $_SESSION['reg_email'] = $loginEmail;
-            $_SESSION['reg_id']    = (int)$row['id'];
+            $_SESSION['reg_id']    = 0;
         } else {
-            $loginError = $t['login_error'];
+            $pdo  = db();
+            $stmt = $pdo->prepare('SELECT id FROM registrations WHERE email = ?');
+            $stmt->execute([$loginEmail]);
+            $row = $stmt->fetch();
+            if ($row) {
+                $_SESSION['reg_email'] = $loginEmail;
+                $_SESSION['reg_id']    = (int)$row['id'];
+            } else {
+                $loginError = $t['login_error'];
+            }
         }
     } else {
         $loginError = $t['login_error'];

@@ -83,6 +83,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
         }
 
+        $selectedEnsembles = [];
+        if (!empty($ensembleIds)) {
+            $ensStmt = $pdo->prepare('SELECT id, name_est FROM ensembles WHERE id = ?');
+            foreach ($ensembleIds as $eid) {
+                if (in_array($eid, $validIds, true)) {
+                    $ensStmt->execute([$eid]);
+                    $ensRow = $ensStmt->fetch();
+                    if ($ensRow) {
+                        $selectedEnsembles[] = $ensRow['name_est'];
+                    }
+                }
+            }
+        }
+
         $pdo->commit();
 
         // Build attendance and unsubscribe URLs
@@ -98,6 +112,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $body .= "\n\n--- English ---\n" . sprintf($enLang['email_confirm_body'], $url, $unsubUrl);
 
         sendEmail($email, $subject, $body);
+
+        // Notify administration in Estonian about new registrations.
+        $adminSubject = 'Uus registreerumine – Koosmänguklubi';
+        $adminBody = "Uus liige registreerus Koosmänguklubisse.\n\n"
+            . "Nimi: {$name}\n"
+            . "E-post: {$email}\n"
+            . "Instrument / Hääl: " . ($instrument !== '' ? $instrument : '-') . "\n"
+            . "Valitud ansamblid: " . (!empty($selectedEnsembles) ? implode(', ', $selectedEnsembles) : '-') . "\n"
+            . "Muusikaline kogemus / taust: " . ($experience !== '' ? $experience : '-') . "\n"
+            . "Lisainfo: " . ($comments !== '' ? $comments : '-') . "\n";
+        sendEmail(ADMIN_EMAIL, $adminSubject, $adminBody);
 
         $success    = true;
         $successUrl  = htmlspecialchars($url,     ENT_QUOTES, 'UTF-8');

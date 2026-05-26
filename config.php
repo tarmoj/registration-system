@@ -15,6 +15,7 @@ define('SECRET_KEY', 'w6V7xtl4AB/q0PuAJNBH727YQggMiy45lHQAWXMlhR8=');
 define('TESTING', true);
 define('EMAIL_FROM', 'koosmanguklubi@gmail.com');
 define('EMAIL_FROM_NAME', 'Koosmänguklubi');
+define('ADMIN_EMAIL', 'koosmanguklubi@gmail.com');
 define('LOG_FILE', __DIR__ . '/logs/email.log');
 
 // Ensemble schedule config (ensemble_id => day-of-week, 0=Sun 6=Sat)

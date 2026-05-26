@@ -60,8 +60,14 @@ Kui liitub veel huvilisi: Lihtsate lugude ansambel (õppinud mõned aastad või 
     'unsubscribe_label'   => 'Klubist lahkumine',
 
     // Unsubscribe page
-    'unsubscribe_confirm' => 'Kas soovite loobuda Koosmänguklubi meililistist?',
-    'unsubscribe_btn'     => 'Loobu',
-    'unsubscribe_done'    => 'Kahju, et lahkute. Olete alati teretulnud uuesti liituma <a href="%s">registreerumislehel</a>.',
-    'unsubscribe_invalid' => 'Vigane link.',
+    'unsubscribe_confirm'     => 'Kas soovite loobuda Koosmänguklubi meililistist?',
+    'unsubscribe_btn'         => 'Loobu',
+    'unsubscribe_done'        => 'Kahju, et lahkute. Olete alati teretulnud uuesti liituma <a href="%s">registreerumisel</a>.',
+    'unsubscribe_invalid'     => 'Vigane link.',
+    'unsubscribe_email_prompt'=> 'Sisestage oma e-posti aadress:',
+    'unsubscribe_email_btn'   => 'Saada link',
+    'unsubscribe_email_sent'  => 'Lahkumise link saadetakse teie e-mailile %s.',
+    'unsubscribe_email_error' => 'E-posti aadressi ei leitud.',
+    'unsubscribe_email_subject' => 'Koosmänguklubi – lahkumise link',
+    'unsubscribe_email_body'  => "Lahkumiseks klõpsake sellel lingil:\n%s\n",
 ];

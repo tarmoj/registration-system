@@ -60,8 +60,14 @@ If more participants join: Simple pieces ensemble (a few years of study or self-
     'unsubscribe_label'   => 'Unsubscribe from club',
 
     // Unsubscribe page
-    'unsubscribe_confirm' => 'Would you like to unsubscribe from the Koosmänguklubi mailing list?',
-    'unsubscribe_btn'     => 'Unsubscribe',
-    'unsubscribe_done'    => 'Sorry to see you go. You are always welcome to rejoin by <a href="%s">registering again</a>.',
-    'unsubscribe_invalid' => 'Invalid link.',
+    'unsubscribe_confirm'     => 'Would you like to unsubscribe from the Koosmänguklubi mailing list?',
+    'unsubscribe_btn'         => 'Unsubscribe',
+    'unsubscribe_done'        => 'Sorry to see you go. You are always welcome to rejoin by <a href="%s">registering again</a>.',
+    'unsubscribe_invalid'     => 'Invalid link.',
+    'unsubscribe_email_prompt'=> 'Enter your email address:',
+    'unsubscribe_email_btn'   => 'Send link',
+    'unsubscribe_email_sent'  => 'An unsubscribe link has been sent to %s.',
+    'unsubscribe_email_error' => 'Email address not found.',
+    'unsubscribe_email_subject' => 'Koosmänguklubi – unsubscribe link',
+    'unsubscribe_email_body'  => "To unsubscribe, click this link:\n%s\n",
 ];
