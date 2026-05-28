@@ -59,15 +59,17 @@ if (!$valid) {
     // Don't set $error — fall through to show the email form (or sent notice)
 } elseif ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirm_unsubscribe'])) {
     $pdo = db();
-    $stmt = $pdo->prepare('SELECT id FROM registrations WHERE email = ?');
+    $stmt = $pdo->prepare('SELECT id, name FROM registrations WHERE email = ?');
     $stmt->execute([$email]);
     $row = $stmt->fetch();
 
     if ($row) {
         $regId = (int)$row['id'];
+        $name  = $row['name'] ?? $email;
         $pdo->prepare('DELETE FROM attendance WHERE registration_id = ?')->execute([$regId]);
         $pdo->prepare('DELETE FROM registration_ensembles WHERE registration_id = ?')->execute([$regId]);
         $pdo->prepare('DELETE FROM registrations WHERE id = ?')->execute([$regId]);
+        sendEmail(ADMIN_EMAIL, 'Koosmänguklubi – lahkumine', "$name, $email, lahkus Koosmänguklubbist.");
     }
     // Even if already gone, show success
     $done = true;
