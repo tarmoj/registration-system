@@ -8,8 +8,8 @@ SCP="scp -q"
 
 echo "Deploying to ${REMOTE}:${DEST} ..."
 
-# Top-level PHP files
-$SCP attendance.php config.php db.php register.php unsubscribe.php \
+# Top-level PHP files (config.php is excluded — manage it on the server directly)
+$SCP attendance.php db.php register.php unsubscribe.php \
     "${REMOTE}:${DEST}/"
 
 # Subdirectories (recursive)
