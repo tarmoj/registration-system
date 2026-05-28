@@ -54,7 +54,8 @@ If more participants join: Simple pieces ensemble (a few years of study or self-
 
     // Reminder email
     'reminder_subject'    => 'Reminder – Koosmänguklubi',
-    'reminder_body'       => "Reminder: please confirm whether you will attend the Koosmänguklubi ensemble \"%s\" on %s:\n\nYES: %s\nNO:  %s\n",
+    'reminder_body'       => '<p>Reminder: please confirm whether you will attend the Koosmänguklubi ensemble &ldquo;<strong>%s</strong>&rdquo; on <strong>%s</strong>:</p><p><a href="%s" style="display:inline-block;padding:0.5rem 1.4rem;background:#2a7;color:#fff;text-decoration:none;border-radius:4px;font-weight:bold">YES</a>&nbsp;&nbsp;<a href="%s" style="display:inline-block;padding:0.5rem 1.4rem;background:#a33;color:#fff;text-decoration:none;border-radius:4px;font-weight:bold">NO</a></p>',
+    'reminder_unsubscribe' => 'To unsubscribe from the mailing list, <a href="%s">click here</a>.',
 
     // Unsubscribe link label (shown on registration page and in emails)
     'unsubscribe_label'   => 'Unsubscribe from club',

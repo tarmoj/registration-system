@@ -54,7 +54,8 @@ Kui liitub veel huvilisi: Lihtsate lugude ansambel (õppinud mõned aastad või 
 
     // Reminder email
     'reminder_subject'    => 'Meeldetuletus – Koosmänguklubi',
-    'reminder_body'       => "Meeldetuletus: palun kinnitage, kas osalete Koosmänguklubi ansamblis \"%s\" %s:\n\nJAH: %s\nEI:  %s\n",
+    'reminder_body'       => '<p>Meeldetuletus: palun kinnitage, kas osalete Koosmänguklubi ansamblis &ldquo;<strong>%s</strong>&rdquo; kuupäeval <strong>%s</strong>:</p><p><a href="%s" style="display:inline-block;padding:0.5rem 1.4rem;background:#2a7;color:#fff;text-decoration:none;border-radius:4px;font-weight:bold">JAH</a>&nbsp;&nbsp;<a href="%s" style="display:inline-block;padding:0.5rem 1.4rem;background:#a33;color:#fff;text-decoration:none;border-radius:4px;font-weight:bold">EI</a></p>',
+    'reminder_unsubscribe' => 'Listist lahkumiseks vajutage <a href="%s">siia</a>.',
 
     // Unsubscribe link label (shown on registration page and in emails)
     'unsubscribe_label'   => 'Klubist lahkumine',

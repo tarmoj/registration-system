@@ -54,7 +54,9 @@ foreach ($byReg as $regId => $rows) {
     $email = $rows[0]['email'];
     $name  = $rows[0]['name'];
 
-    $remindBlocks = [];  // collect reminder text blocks, one per ensemble
+    $remindBlocks = [];  // collect reminder HTML blocks, one per ensemble
+    $token        = hash_hmac('sha256', $email, SECRET_KEY);
+    $unsubUrl     = BASE_URL . '/unsubscribe.php?email=' . urlencode($email) . '&token=' . $token;
 
     foreach ($rows as $row) {
         $eid = (int)$row['ensemble_id'];
@@ -78,7 +80,6 @@ foreach ($byReg as $regId => $rows) {
         if ($att === 'yes' || $att === 'no') continue;
 
         // Build quick-vote URLs
-        $token   = hash_hmac('sha256', $email, SECRET_KEY);
         $baseUrl = BASE_URL . '/attendance.php?email=' . urlencode($email)
                    . '&token=' . $token
                    . '&ensemble_id=' . $eid
@@ -92,15 +93,26 @@ foreach ($byReg as $regId => $rows) {
         $blockEt = sprintf($etLang['reminder_body'], $ensNameEt, $nextDate, $yesUrl, $noUrl);
         $blockEn = sprintf($enLang['reminder_body'], $ensNameEn, $nextDate, $yesUrl, $noUrl);
 
-        $remindBlocks[] = "--- Eesti ---\n$blockEt\n--- English ---\n$blockEn";
+        $remindBlocks[] = "<p><strong>&#8212; Eesti &#8212;</strong></p>\n$blockEt\n<p><strong>&#8212; English &#8212;</strong></p>\n$blockEn";
     }
 
     if (empty($remindBlocks)) continue;
 
-    $subject = $etLang['reminder_subject'] . ' / ' . $enLang['reminder_subject'];
-    $body    = "Tere $name,\n\n" . implode("\n" . str_repeat('-', 60) . "\n\n", $remindBlocks);
+    $subject  = $etLang['reminder_subject'] . ' / ' . $enLang['reminder_subject'];
+    $nameHtml = htmlspecialchars($name, ENT_QUOTES, 'UTF-8');
+    $unsubEt  = sprintf($etLang['reminder_unsubscribe'], htmlspecialchars($unsubUrl, ENT_QUOTES, 'UTF-8'));
+    $unsubEn  = sprintf($enLang['reminder_unsubscribe'], htmlspecialchars($unsubUrl, ENT_QUOTES, 'UTF-8'));
+    $body     = '<!DOCTYPE html><html lang="et"><head><meta charset="UTF-8"></head>'
+              . '<body style="font-family:sans-serif;max-width:600px;margin:0 auto;padding:1rem;line-height:1.6">'
+              . "<p>Tere $nameHtml,</p>"
+              . '<hr>'
+              . implode("\n<hr>\n", $remindBlocks)
+              . '<hr style="margin-top:2rem">'
+              . '<p style="font-size:0.85em;color:#555">' . $unsubEt . '</p>'
+              . '<p style="font-size:0.85em;color:#555">' . $unsubEn . '</p>'
+              . '</body></html>';
 
-    sendEmail($email, $subject, $body);
+    sendEmail($email, $subject, $body, true);
     echo "Reminder sent to $email\n";
 }
 
