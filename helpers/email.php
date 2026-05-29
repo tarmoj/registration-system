@@ -24,6 +24,7 @@ function sendEmail(string $to, string $subject, string $body, bool $isHtml = fal
         $contentType = $isHtml ? 'text/html' : 'text/plain';
         $headers = implode("\r\n", [
             'From: ' . EMAIL_FROM_NAME . ' <' . EMAIL_FROM . '>',
+            'Reply-To: ' . EMAIL_REPLY_TO,
             'Content-Type: ' . $contentType . '; charset=UTF-8',
             'MIME-Version: 1.0',
         ]);

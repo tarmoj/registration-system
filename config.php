@@ -13,8 +13,9 @@ define('SECRET_KEY', 'w6V7xtl4AB/q0PuAJNBH727YQggMiy45lHQAWXMlhR8=');
 
 // Email: set to true to write emails to logs/email.log instead of sending
 define('TESTING', true);
-define('EMAIL_FROM', 'koosmanguklubi@gmail.com');
+define('EMAIL_FROM', 'koosmanguklubi@uuu.ee');
 define('EMAIL_FROM_NAME', 'Koosmänguklubi');
+define('EMAIL_REPLY_TO', 'koosmanguklubi@gmail.com');
 define('ADMIN_EMAIL', 'koosmanguklubi@gmail.com');
 define('LOG_FILE', __DIR__ . '/logs/email.log');
 
