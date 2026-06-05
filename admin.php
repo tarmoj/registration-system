@@ -118,8 +118,18 @@ $allEmails = array_column($registrations, 'email');
   th, td { border: 1px solid #d1d5db; padding: .45rem .7rem; white-space: nowrap; }
   th { background: #1e3a5f; color: #fff; text-align: left; }
   tr:nth-child(even) td { background: #f9fafb; }
-  td.wrap { white-space: normal; max-width: 260px; word-break: break-word; }
+  td.trunc { max-width: 160px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; cursor: pointer; }
+  td.trunc:hover { background: #eff6ff !important; }
   td.center { text-align: center; }
+
+  /* Popup */
+  #popup-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.45); z-index: 100; align-items: center; justify-content: center; }
+  #popup-overlay.open { display: flex; }
+  #popup-box { background: #fff; border-radius: 8px; box-shadow: 0 4px 24px rgba(0,0,0,.25); padding: 1.4rem 1.6rem; max-width: 480px; width: 90%; position: relative; max-height: 80vh; overflow-y: auto; }
+  #popup-label { font-size: .7rem; text-transform: uppercase; letter-spacing: .06em; color: #6b7280; margin-bottom: .5rem; }
+  #popup-text { font-size: .9rem; white-space: pre-wrap; word-break: break-word; margin: 0; }
+  #popup-close { position: absolute; top: .5rem; right: .8rem; background: none; border: none; font-size: 1.4rem; cursor: pointer; color: #6b7280; line-height: 1; padding: 0; }
+  #popup-close:hover { color: #111; }
 
   /* Ensemble key */
   .ens-key { margin-bottom: 1rem; font-size: .85rem; }
@@ -178,10 +188,10 @@ $allEmails = array_column($registrations, 'email');
             <td><?= htmlspecialchars(substr($reg['created_at'], 0, 10)) ?></td>
             <td><?= htmlspecialchars($reg['name']) ?></td>
             <td><?= htmlspecialchars($reg['email']) ?></td>
-            <td><?= htmlspecialchars($reg['instrument'] ?? '') ?></td>
+            <td class="trunc" data-label="Instrument"><?= htmlspecialchars($reg['instrument'] ?? '') ?></td>
             <td class="center"><?= htmlspecialchars($ensStr) ?></td>
-            <td class="wrap"><?= htmlspecialchars($reg['experience'] ?? '') ?></td>
-            <td class="wrap"><?= htmlspecialchars($reg['comments'] ?? '') ?></td>
+            <td class="trunc" data-label="Experience"><?= htmlspecialchars($reg['experience'] ?? '') ?></td>
+            <td class="trunc" data-label="Comments"><?= htmlspecialchars($reg['comments'] ?? '') ?></td>
           </tr>
         <?php endforeach; ?>
       </tbody>
@@ -212,7 +222,32 @@ $allEmails = array_column($registrations, 'email');
   <?php endforeach; ?>
 
 </main>
+
+<div id="popup-overlay" onclick="closePopup()">
+  <div id="popup-box" onclick="event.stopPropagation()">
+    <button id="popup-close" onclick="closePopup()">&times;</button>
+    <div id="popup-label"></div>
+    <p id="popup-text"></p>
+  </div>
+</div>
+
 <script>
+function closePopup() {
+  document.getElementById('popup-overlay').classList.remove('open');
+}
+
+document.querySelectorAll('td.trunc').forEach(td => {
+  td.addEventListener('click', () => {
+    const text = td.textContent.trim();
+    if (!text) return;
+    document.getElementById('popup-label').textContent = td.dataset.label || '';
+    document.getElementById('popup-text').textContent = text;
+    document.getElementById('popup-overlay').classList.add('open');
+  });
+});
+
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closePopup(); });
+
 function copyList(id, btn) {
   const text = document.getElementById(id).textContent;
   navigator.clipboard.writeText(text).then(() => {
