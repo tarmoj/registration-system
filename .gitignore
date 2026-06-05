@@ -1,3 +1,4 @@
 *.csv
 .~lock.*
 v2404_registration.sql
+admin.php
