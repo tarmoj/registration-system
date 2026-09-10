@@ -1,4 +1,4 @@
-deplo#!/usr/bin/env bash
+#!/usr/bin/env bash
 set -euo pipefail
 
 REMOTE="v2404@uuu.ee"

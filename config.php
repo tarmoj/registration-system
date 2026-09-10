@@ -19,9 +19,21 @@ define('EMAIL_REPLY_TO', 'koosmanguklubi@gmail.com');
 define('ADMIN_EMAIL', 'koosmanguklubi@gmail.com');
 define('LOG_FILE', __DIR__ . '/logs/email.log');
 
-// Ensemble schedule config (ensemble_id => day-of-week, 0=Sun 6=Sat)
+// Ensemble schedule config (ensemble_id => explicit list of session dates)
 define('ENSEMBLE_SCHEDULES', serialize([
-    1 => ['dow' => 0, 'cutoff' => '2026-06-14'],  // Classical — Sundays
-    2 => ['dow' => 6, 'cutoff' => '2026-06-13'],  // Impro — Saturdays
-    3 => ['dow' => 0, 'cutoff' => '2026-06-14'],  // Beginners — Sundays
+    1 => ['dates' => [
+        // Classical — Sundays, from 2026-09-13, skipping 2026-11-15..2026-12-20
+        '2026-09-13', '2026-09-20', '2026-09-27',
+        '2026-10-04', '2026-10-11', '2026-10-18', '2026-10-25',
+        '2026-11-01', '2026-11-08',
+        '2026-12-27',
+    ]],
+    2 => ['dates' => [
+        // Impro — Saturdays, from 2026-09-12, skipping 2026-10-10 and 2026-11-14..2026-12-19
+        '2026-09-12', '2026-09-19', '2026-09-26',
+        '2026-10-03', '2026-10-17', '2026-10-24', '2026-10-31',
+        '2026-11-07',
+        '2026-12-26',
+    ]],
+    3 => ['dates' => []],  // Beginners — no upcoming sessions scheduled
 ]));

@@ -17,14 +17,14 @@ $enLang    = require __DIR__ . '/../lang/en.php';
 $schedules = unserialize(ENSEMBLE_SCHEDULES);
 
 /**
- * Return the next occurrence of a given day-of-week (0=Sun…6=Sat) from today.
+ * Return the next scheduled session date (>= today) from an ensemble's date list, or null.
  */
-function nextDayOfWeek(int $dow): string {
-    $d = new DateTimeImmutable('today');
-    while ((int)$d->format('w') !== $dow) {
-        $d = $d->modify('+1 day');
+function nextSessionDate(array $dates): ?string {
+    $today = (new DateTimeImmutable('today'))->format('Y-m-d');
+    foreach ($dates as $date) {
+        if ($date >= $today) return $date;
     }
-    return $d->format('Y-m-d');
+    return null;
 }
 
 $pdo = db();
@@ -62,11 +62,13 @@ foreach ($byReg as $regId => $rows) {
         $eid = (int)$row['ensemble_id'];
         if (!isset($schedules[$eid])) continue;
 
-        $nextDate = nextDayOfWeek($schedules[$eid]['dow']);
-        $cutoff   = $schedules[$eid]['cutoff'];
+        $nextDate = nextSessionDate($schedules[$eid]['dates']);
 
-        // Only remind if the next date is within the ensemble's schedule range
-        if ($nextDate > $cutoff) continue;
+        // Only remind if there is a scheduled session within the coming weekend
+        // (skip silently during gap weeks with no session)
+        if ($nextDate === null) continue;
+        $daysUntil = (new DateTimeImmutable('today'))->diff(new DateTimeImmutable($nextDate))->days;
+        if ($daysUntil > 6) continue;
 
         // Check if attendance already set for this registration / ensemble / date
         $stmt = $pdo->prepare(

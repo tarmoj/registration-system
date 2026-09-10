@@ -15,24 +15,15 @@ $t = require __DIR__ . "/lang/{$lang}.php";
 
 $schedules = unserialize(ENSEMBLE_SCHEDULES);
 
-// ── Helper: generate dates for an ensemble up to its cutoff ────────────────
+// ── Helper: get upcoming session dates for an ensemble ─────────────────────
 function ensembleDates(int $ensembleId): array {
     global $schedules;
     if (!isset($schedules[$ensembleId])) return [];
-    $dow    = $schedules[$ensembleId]['dow'];
-    $cutoff = new DateTimeImmutable($schedules[$ensembleId]['cutoff']);
-    $today  = new DateTimeImmutable('today');
-    $dates  = [];
-    $d = $today;
-    // Advance to the first matching day-of-week
-    while ((int)$d->format('w') !== $dow) {
-        $d = $d->modify('+1 day');
-    }
-    while ($d <= $cutoff) {
-        $dates[] = $d->format('Y-m-d');
-        $d = $d->modify('+7 days');
-    }
-    return $dates;
+    $today = (new DateTimeImmutable('today'))->format('Y-m-d');
+    return array_values(array_filter(
+        $schedules[$ensembleId]['dates'],
+        fn(string $date) => $date >= $today
+    ));
 }
 
 // ── Helper: validate HMAC token ────────────────────────────────────────────
